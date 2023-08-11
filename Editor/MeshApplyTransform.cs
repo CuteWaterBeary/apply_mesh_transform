@@ -11,7 +11,7 @@ namespace Gigableh
 		bool applyRotation = false;
 		bool applyScale = false;
 
-		[MenuItem("Mesh/Apply Transform")]
+		[MenuItem("Mesh+Bones/Other/Apply Transform (set this position-rotation-scale as default)")]
 		static void Init()
 		{
 			if (Selection.activeGameObject == null)
