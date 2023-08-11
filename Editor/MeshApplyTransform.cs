@@ -21,7 +21,7 @@ namespace Gigableh
 			}
 
 			MeshApplyTransform window = (MeshApplyTransform)EditorWindow.GetWindow(typeof(MeshApplyTransform));
-			
+
 			int width = 200;
 			int height = 150;
 
@@ -75,7 +75,7 @@ namespace Gigableh
 				ApplyTransformRecursive(transform, applyTranslation, applyRotation, applyScale);
 			}
 		}
-		
+
 		// Apply transform recursively for a parent and it's children.
 		public static void ApplyTransformRecursive(
 			Transform transform,
@@ -140,8 +140,8 @@ namespace Gigableh
 					}
 				}
 			}
-		} 
-		
+		}
+
 		// Apply an individual transform.
 		public static void ApplyTransform(
 			Transform transform,
@@ -164,21 +164,21 @@ namespace Gigableh
 
 				meshFilter.sharedMesh = newMesh;
 
-				if (!AssetDatabase.IsValidFolder("Assets/Baked Meshes"))
-					AssetDatabase.CreateFolder("Assets", "Baked Meshes");
+				if (!AssetDatabase.IsValidFolder("Assets/apply_mesh_transform/BakedMeshes"))
+					AssetDatabase.CreateFolder("Assets/apply_mesh_transform", "BakedMeshes");
 
 				var prefabPath = "";
 				if (originalMeshName.StartsWith("BakedMesh"))
 				{
 					Debug.Log("MeshApplyTransform:: Replacing existing baked mesh (" + originalMeshName + ").");
-					prefabPath = "Assets/Baked Meshes/" + originalMeshName + ".asset";
+					prefabPath = "Assets/apply_mesh_transform/BakedMeshes/" + originalMeshName + ".asset";
 				}
 				else
 				{
-					prefabPath = string.Format("Assets/Baked Meshes/BakedMesh_{0}_{1}_{2}.asset",
+					prefabPath = string.Format("Assets/apply_mesh_transform/BakedMeshes/BakedMesh_{0}_{1}_{2}.asset",
 						transform.name, originalMeshName, (int)Mathf.Abs(newMesh.GetHashCode()));
 				}
-				
+
 				AssetDatabase.CreateAsset(newMesh, prefabPath);
 				AssetDatabase.SaveAssets();
 			}
@@ -200,7 +200,7 @@ namespace Gigableh
 		{
 			var verts = mesh.vertices;
 			var norms = mesh.normals;
-			
+
 			// Handle vertices.
 			for (int i = 0; i < verts.Length; ++i)
 			{
@@ -213,7 +213,7 @@ namespace Gigableh
 					nvert.y *= scale.y;
 					nvert.z *= scale.z;
 				}
-			
+
 				if (applyRotation)
 				{
 					nvert = transform.rotation * nvert;
@@ -270,7 +270,7 @@ namespace Gigableh
 				if (applyRotation)
 				{
 					var worldPos = rotation * child.localPosition;
-					child.localRotation = rotation * child.localRotation; 
+					child.localRotation = rotation * child.localRotation;
 					child.localPosition = worldPos;
 				}
 
@@ -281,7 +281,7 @@ namespace Gigableh
 					childScale.y *= scale.y;
 					childScale.z *= scale.z;
 					child.localScale = childScale;
-					
+
 					var childPosition = child.localPosition;
 					childPosition.x *= scale.x;
 					childPosition.y *= scale.y;
